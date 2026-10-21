@@ -1,0 +1,3 @@
+{% extends 'base.html' %}
+{% block title %}Connection needed · LedgerLens{% endblock %}
+{% block content %}<section class="panel error-panel"><p class="eyebrow">DATABASE CONNECTION</p><h1>LedgerLens could not load this view</h1><p>{{ message }}</p><p class="muted">Start Oracle, install the requirements, configure the environment variables, and install the database scripts in order.</p><a class="button secondary" href="{{ url_for('index') }}">Try again</a></section>{% endblock %}

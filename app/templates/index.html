@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard · LedgerLens{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">OVERVIEW</p><h1>Transaction dashboard</h1><p class="muted">Live summary from the connected Oracle schema.</p></div><a class="button primary" href="{{ url_for('new_transfer') }}">＋ New transfer</a></div>
+<section class="cards">
+  <article class="metric"><span>Total transfers</span><strong>{{ summary.transfer_count or 0 }}</strong><small>All recorded requests</small></article>
+  <article class="metric"><span>Completed value</span><strong>{{ '{:,.2f}'.format(summary.completed_value or 0) }}</strong><small>Completed transfer amount</small></article>
+  <article class="metric"><span>Held for review</span><strong>{{ summary.held_count or 0 }}</strong><small>Awaiting a reviewer decision</small></article>
+  <article class="metric accent"><span>High-value flags</span><strong>{{ summary.flagged_count or 0 }}</strong><small>Flags are review signals only</small></article>
+</section>
+<div class="dashboard-grid">
+  <section class="panel span-two"><div class="panel-heading"><div><p class="eyebrow">ACTIVITY</p><h2>Recent transfers</h2></div><a href="{{ url_for('new_transfer') }}">Create transfer →</a></div>
+    {% if recent %}<div class="table-wrap"><table><thead><tr><th>Reference</th><th>Route</th><th>Amount</th><th>Status</th><th>Created</th></tr></thead><tbody>
+    {% for row in recent %}<tr><td><a href="{{ url_for('transfer_detail', transfer_id=row.transfer_id) }}">{{ row.reference_number }}</a></td><td>{{ row.from_account }} → {{ row.to_account }}</td><td>{{ '{:,.2f}'.format(row.amount) }}</td><td><span class="badge {{ row.status|lower }}">{{ row.status|replace('_',' ') }}</span></td><td>{{ row.created_at.strftime('%d %b %Y %H:%M') if row.created_at else '—' }}</td></tr>{% endfor %}
+    </tbody></table></div>{% else %}<p class="empty">No transfers yet. Create one to begin the demonstration.</p>{% endif %}
+  </section>
+  <section class="panel"><div class="panel-heading"><div><p class="eyebrow">MONITORING</p><h2>High-value alerts</h2></div></div>
+    {% if alerts %}<div class="stack">{% for row in alerts %}<a class="list-item" href="{{ url_for('transfer_detail', transfer_id=row.transfer_id) }}"><span><strong>{{ row.reference_number }}</strong><small>{{ row.risk_reason }}</small></span><b>{{ '{:,.2f}'.format(row.amount) }}</b></a>{% endfor %}</div>{% else %}<p class="empty">No flagged transfers.</p>{% endif %}
+  </section>
+  <section class="panel"><div class="panel-heading"><div><p class="eyebrow">ACTION REQUIRED</p><h2>Pending reviews</h2></div><a href="{{ url_for('reviews') }}">View queue →</a></div>
+    {% if pending %}<div class="stack">{% for row in pending[:5] %}<a class="list-item" href="{{ url_for('transfer_detail', transfer_id=row.transfer_id) }}"><span><strong>{{ row.reference_number }}</strong><small>{{ row.reason }}</small></span><b>{{ '{:,.2f}'.format(row.amount) }}</b></a>{% endfor %}</div>{% else %}<p class="empty">The review queue is clear.</p>{% endif %}
+  </section>
+  <section class="panel span-two"><div class="panel-heading"><div><p class="eyebrow">ACCOUNTS</p><h2>Current balances</h2></div></div>
+    <div class="table-wrap"><table><thead><tr><th>Account</th><th>Holder</th><th>Type</th><th>Balance</th><th>Status</th></tr></thead><tbody>{% for row in balances %}<tr><td>{{ row.account_number }}</td><td>{{ row.account_holder }}</td><td>{{ row.account_type }}</td><td>{{ '{:,.2f}'.format(row.balance) }}</td><td><span class="badge {{ row.account_status|lower }}">{{ row.account_status }}</span></td></tr>{% endfor %}</tbody></table></div>
+  </section>
+</div>
+{% endblock %}

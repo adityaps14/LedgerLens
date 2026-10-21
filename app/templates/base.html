@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}LedgerLens{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="{{ url_for('index') }}"><span class="brand-mark">L</span><span>LedgerLens<small>Transaction monitoring lab</small></span></a>
+    <nav aria-label="Main navigation">
+      <a href="{{ url_for('index') }}">Dashboard</a>
+      <a href="{{ url_for('new_transfer') }}">New transfer</a>
+      <a href="{{ url_for('reviews') }}">Review queue</a>
+      <a href="{{ url_for('settings') }}">Settings</a>
+    </nav>
+  </header>
+  <main class="page-shell">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}<div class="flash-stack">{% for category, message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}</div>{% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+    <footer>LedgerLens is an educational transaction-monitoring demonstration. A high-value flag is not proof of fraud.</footer>
+  </main>
+</body>
+</html>
