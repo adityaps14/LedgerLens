@@ -113,9 +113,26 @@ Open [http://127.0.0.1:5000](http://127.0.0.1:5000). The default app binds to lo
 
 The detailed five-minute narration is in [the demo script](docs/DEMO_SCRIPT.md).
 
-## Test and validation record
+## Test and Validation Record
 
-Local Python syntax, Flask route/template smoke, and project-link checks passed; their scope and the unavailable Oracle checks are recorded in the [test plan](docs/TEST_PLAN.md). Oracle compilation and the PL/SQL suite were not run because no Oracle client, driver, or connection settings were available. Local checks do not establish Oracle runtime correctness.
+### Oracle Live SQL validation
+
+The following validation was completed using Oracle Live SQL:
+
+- Database schema and seed data were created successfully.
+- `PKG_LEDGERLENS` package body compiled with no reported errors.
+- `trg_transfers_status_audit` trigger compiled with no reported errors.
+- The demonstration successfully completed a normal $1,000 transfer and a high-value $60,000 transfer. The high-value transfer was marked with `risk_flag = Y`.
+- The PL/SQL test suite reported **17 PASS, 0 FAIL**.
+
+The test suite covered normal transfers, high-value classification, review workflows, insufficient funds, invalid amounts, inactive accounts, audit records, duplicate review prevention, rollback behavior, and repeated-processing protection.
+
+### Limitations
+
+- Oracle Live SQL restricts certain SQL*Plus commands, including `WHENEVER SQLERROR` and script-invocation commands such as `@@filename.sql`.
+- The concurrent two-session test requires a live Oracle instance and has not been demonstrated by the single-session test run.
+- The local Flask dashboard's connection to Oracle has not yet been verified.
+- These results demonstrate educational test coverage; they do not establish production readiness or certified fraud detection.
 
 ## Student report, ER model and viva
 
