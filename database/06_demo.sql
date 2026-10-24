@@ -1,7 +1,5 @@
 -- Reproducible short demo. This script commits its two displayed example transfers.
 SET SERVEROUTPUT ON
-SET DEFINE OFF
-WHENEVER SQLERROR EXIT SQL.SQLCODE ROLLBACK
 
 DECLARE
     l_from_id NUMBER;

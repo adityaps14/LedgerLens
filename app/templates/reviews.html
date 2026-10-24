@@ -1,6 +1,71 @@
+```html
 {% extends 'base.html' %}
 {% block title %}Review queue · LedgerLens{% endblock %}
+
 {% block content %}
-<div class="page-heading"><div><p class="eyebrow">MANUAL REVIEW</p><h1>Pending review queue</h1><p class="muted">Approving a held transfer revalidates accounts and balance in Oracle.</p></div></div>
-{% if reviews %}<div class="review-grid">{% for row in reviews %}<article class="panel review-card"><div class="review-top"><span class="badge held_for_review">PENDING REVIEW</span><span class="muted">{{ row.created_at.strftime('%d %b %Y %H:%M') if row.created_at else '' }}</span></div><h2><a href="{{ url_for('transfer_detail', transfer_id=row.transfer_id) }}">{{ row.reference_number }}</a></h2><p class="amount">{{ '{:,.2f}'.format(row.amount) }}</p><p>{{ row.reason }}</p><form method="post" action="{{ url_for('decide_review', transfer_id=row.transfer_id, decision='APPROVED') }}" class="review-form"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><label>Reviewer<input name="reviewer" value="{{ reviewer }}" required></label><label>Notes<textarea name="notes" rows="2" placeholder="Reason for decision"></textarea></label><div class="button-row"><button class="button primary" formaction="{{ url_for('decide_review', transfer_id=row.transfer_id, decision='APPROVED') }}">Approve</button><button class="button danger" formaction="{{ url_for('decide_review', transfer_id=row.transfer_id, decision='REJECTED') }}">Reject</button></div></form></article>{% endfor %}</div>{% else %}<section class="panel empty-state"><div class="empty-icon">✓</div><h2>No pending reviews</h2><p class="muted">New high-value transfers appear here when the system is in hold mode or after a completed flag.</p></section>{% endif %}
+<div class="page-heading">
+    <div>
+        <p class="eyebrow">MANUAL REVIEW</p>
+        <h1>Pending review queue</h1>
+        <p class="muted">Approving a held transfer revalidates accounts and balance.</p>
+    </div>
+</div>
+
+{% if reviews %}
+<div class="review-grid">
+    {% for row in reviews %}
+    <article class="panel review-card">
+        <div class="review-top">
+            <span class="badge held_for_review">PENDING REVIEW</span>
+            <span class="muted">{{ row.created_at if row.created_at else '' }}</span>
+        </div>
+
+        <h2>
+            <a href="{{ url_for('transfer_detail', transfer_id=row.transfer_id) }}">
+                {{ row.reference_number }}
+            </a>
+        </h2>
+
+        <p class="amount">{{ '{:,.2f}'.format(row.amount) }}</p>
+        <p>{{ row.reason }}</p>
+
+        <form method="post"
+              action="{{ url_for('review', transfer_id=row.transfer_id, decision='approve') }}"
+              class="review-form">
+
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            <label>
+                Reviewer
+                <input name="reviewer" value="{{ reviewer }}" required>
+            </label>
+
+            <label>
+                Notes
+                <textarea name="notes" rows="2" placeholder="Reason for decision"></textarea>
+            </label>
+
+            <div class="button-row">
+                <button class="button primary" type="submit">
+                    Approve
+                </button>
+
+                <button class="button danger"
+                        type="submit"
+                        formaction="{{ url_for('review', transfer_id=row.transfer_id, decision='reject') }}">
+                    Reject
+                </button>
+            </div>
+        </form>
+    </article>
+    {% endfor %}
+</div>
+{% else %}
+<section class="panel empty-state">
+    <div class="empty-icon">✓</div>
+    <h2>No pending reviews</h2>
+    <p class="muted">New high-value transfers appear here when they require manual review.</p>
+</section>
+{% endif %}
 {% endblock %}
+```

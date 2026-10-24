@@ -1,7 +1,5 @@
 -- LedgerLens business rules. Package procedures do not COMMIT; the caller owns the transaction.
 SET DEFINE OFF
-SET SERVEROUTPUT ON
-WHENEVER SQLERROR EXIT SQL.SQLCODE ROLLBACK
 
 CREATE OR REPLACE PACKAGE pkg_ledgerlens AS
     PROCEDURE validate_transfer(

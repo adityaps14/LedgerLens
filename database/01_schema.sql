@@ -1,8 +1,5 @@
 -- LedgerLens schema for Oracle Database 19c or newer.
 -- Run once in a new, dedicated schema. This script intentionally does not drop objects.
-SET DEFINE OFF
-SET SERVEROUTPUT ON
-WHENEVER SQLERROR EXIT SQL.SQLCODE ROLLBACK
 
 CREATE TABLE customers (
     customer_id NUMBER GENERATED ALWAYS AS IDENTITY,
@@ -118,5 +115,3 @@ CREATE INDEX ix_review_transfer ON review_queue(transfer_id, review_status, crea
 -- A transfer can have historical reviews but at most one pending queue entry.
 CREATE UNIQUE INDEX uq_review_one_pending ON review_queue
     (CASE WHEN review_status = 'PENDING' THEN transfer_id ELSE NULL END);
-
-PROMPT LedgerLens schema created. Continue with 02_seed_data.sql.

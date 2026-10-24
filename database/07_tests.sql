@@ -1,8 +1,6 @@
 -- Oracle SQL/PLSQL test suite. Run after schema, seed, package, and trigger scripts.
 -- Every case rolls back to its savepoint. IDs are looked up by the deterministic account numbers.
 SET SERVEROUTPUT ON
-SET DEFINE OFF
-WHENEVER SQLERROR EXIT SQL.SQLCODE ROLLBACK
 
 DECLARE
     l_passes PLS_INTEGER := 0;

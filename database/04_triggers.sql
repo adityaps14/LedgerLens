@@ -1,7 +1,5 @@
 -- Small audit/maintenance triggers. Business decisions remain in PKG_LEDGERLENS.
 SET DEFINE OFF
-SET SERVEROUTPUT ON
-WHENEVER SQLERROR EXIT SQL.SQLCODE ROLLBACK
 
 CREATE OR REPLACE TRIGGER trg_accounts_updated_at
 BEFORE UPDATE ON accounts

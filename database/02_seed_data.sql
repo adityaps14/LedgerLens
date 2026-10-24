@@ -1,7 +1,6 @@
 -- Fictional, deterministic classroom data. Run after 01_schema.sql.
 SET DEFINE OFF
 SET SERVEROUTPUT ON
-WHENEVER SQLERROR EXIT SQL.SQLCODE ROLLBACK
 
 INSERT INTO customers (full_name, email) VALUES ('Aarav Mehta', 'aarav.mehta@example.test');
 INSERT INTO customers (full_name, email) VALUES ('Diya Rao', 'diya.rao@example.test');
