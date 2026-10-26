@@ -110,6 +110,44 @@ LedgerLens provides an understandable example of using PL/SQL packages, constrai
 - Add pagination, user-visible operational monitoring and accessibility review to the dashboard.
 - Evaluate audit retention and tamper-evident controls for a production-grade system.
 
+## Screenshots and Results
+
+This section presents screenshots of the LedgerLens web application demonstrating its main interface and features. The application was run in Demo Mode for interface and workflow demonstration.
+
+### 1. Dashboard
+
+The Dashboard provides an overview of the LedgerLens application and its transaction monitoring features.
+
+![LedgerLens Dashboard](../screenshorts/01-dashboard.png)
+
+### 2. New Transfer
+
+The New Transfer page allows users to enter transfer details and initiate the transaction workflow.
+
+![New Transfer Form](../screenshorts/02-new-transfer.png)
+
+### 3. Reviews
+
+The Reviews page provides an interface for reviewing transfers that require further attention.
+
+![Transfer Reviews](../screenshorts/03-reviews.png)
+
+### 4. Successful Transfer
+
+This screenshot demonstrates the successful transfer result displayed by the application during testing.
+
+![Successful Transfer](../screenshorts/03-successfulltransfer.png)
+
+### 5. Threshold Settings
+
+The Settings page allows the user to update the transaction monitoring threshold. The updated threshold was successfully saved during the demonstration.
+
+![Threshold Settings](../screenshorts/04-settings.png)
+
+### Results Summary
+
+The screenshots demonstrate the application's dashboard, transfer form, review interface, successful transfer result, and threshold configuration page. These screenshots document the demonstrated functionality of the Flask application in Demo Mode. Oracle Database connectivity was not verified as part of this demonstration.
+
 ## References
 
 - Oracle Database PL/SQL Language Reference: [Oracle Database documentation](https://docs.oracle.com/en/database/oracle/oracle-database/19/lnpls/).

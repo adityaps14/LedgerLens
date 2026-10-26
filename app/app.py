@@ -15,10 +15,16 @@ try:
 except ImportError:
     pass
 
-if os.getenv("DEMO_MODE", "false").strip().lower() == "true":
-    import demo_db as db
-else:
-    import db
+try:
+    if os.getenv("DEMO_MODE", "false").strip().lower() == "true":
+        from . import demo_db as db
+    else:
+        from . import db
+except ImportError:
+    if os.getenv("DEMO_MODE", "false").strip().lower() == "true":
+        import demo_db as db
+    else:
+        import db
 
 app = Flask(__name__)
 app.secret_key = os.getenv("FLASK_SECRET_KEY") or secrets.token_hex(32)
