@@ -13,7 +13,25 @@ It is designed for a database/PLSQL lab, a student project report, and a portfol
 - Account row locking in ascending account ID order, execution-time revalidation, atomic balance changes, and caller-owned transactions.
 - Two high-value modes: `FLAG_AND_COMPLETE` (seeded default) and `HOLD_FOR_REVIEW`.
 - Lifecycle audit log, configuration audit history, pending review queue, SQL reports and a rollback-based PL/SQL suite.
-- Optional Flask dashboard using `python-oracledb`; the application calls the PL/SQL package for business operations.
+- Optional Flask dashboard using `python-oracledb`; the application calls the PL/SQL package 
+for business operations.
+
+## Application Screenshots
+
+### Dashboard
+![LedgerLens Dashboard](screenshorts/01-dashboard.png)
+
+### New Transfer
+![LedgerLens New Transfer](screenshorts/02-new-transfer.png)
+
+### Transfer Reviews
+![LedgerLens Transfer Reviews](screenshorts/03-reviews.png)
+
+### Successful Transfer
+![LedgerLens Successful Transfer](screenshorts/03-successfulltransfer.png)
+
+### Threshold Settings
+![LedgerLens Threshold Settings](screenshorts/04-settings.png)
 
 ## Requirements
 
